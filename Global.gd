@@ -1,7 +1,10 @@
 extends Node
 
 # save values that need to exist for multiple levels
+var props : Dictionary = { "life" : 3, "item": 0 }
 
-var total_lives = 3 # default lives to start with
-var player_lives = 3 # counts lives 
-var item_count = 0 # counts generic items, can add more, could be specific like apple_count
+# values that need to be available to scene manager logic (for example)
+var player_lives_max = 3
+
+func restart():
+	props = { "life" : 3, "item": 0 }

@@ -1,17 +1,21 @@
 extends Node
 
+# updates visual display based on global items
+# item strings have to match Global items/collectibles
+
 # get an array (list) of references to display nodes for each metric
-export (Array, NodePath) var metrics_paths
+@export var metrics_paths : Array[NodePath]
 var metrics = Array()
 
 func _ready():
-	# load the metrics from path
 	for path in metrics_paths:
-		var metric = get_node(path)
-		metrics.push_front(metric)
+		metrics.append(get_node(path))
+	# load the metrics from path
+	update()
 
-# update display of each metric when state changes in game
-func update_display():
+func update():
 	for metric in metrics:
-		print(metric)
-		metric.update_display()
+		var value = 0
+		if Global.props.has(metric.metric_name):
+			value = Global.props[metric.metric_name]
+		metric.update_display(value)

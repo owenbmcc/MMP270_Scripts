@@ -1,25 +1,24 @@
 extends Camera2D
 
 # get reference to player to track/follow position
-export (NodePath) var player_path
-onready var player = get_node(player_path)
+@export var player : Node2D
 
 # track camera copies the player position as soon as player moves
-export var track_horizontal = true
-export var track_vertical = true
+@export var track_horizontal : bool = true
+@export var track_vertical : bool = true
 
 # follow allows player to move until outside of a certain area
 # more typical for RPG game
-export var follow_horizontal = false
-export var follow_vertical = false
+@export var follow_horizontal : bool = false
+@export var follow_vertical : bool = false
 
 # how far from camera before it moves
 # should be about 1/4 of window dimension, or less, can't be over 1/2
-export var follow_distance = Vector2(100, 100)
+@export var follow_distance : Vector2 = Vector2(100, 100)
 
 # speed to catch up to player
 # can't be faster than player
-export var follow_speed = 100 
+@export var follow_speed : int = 100 
 	
 func _process(delta):
 

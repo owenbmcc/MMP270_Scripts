@@ -1,36 +1,55 @@
-extends Node2D
+extends Node
 
-export (NodePath) var player_path
-onready var player = get_node(player_path)
+# added in each scene to connect events to ui and game logic
+# logic for things like player deaths etc.
 
-export (NodePath) var game_over_path
-onready var game_over_ui = get_node(game_over_path)
+# get reference to player to set position
+@export var player : Node2D
+@export var metrics_ui : Control
 
-export (NodePath) var metrics_path
-onready var metrics = get_node(metrics_path)
+@export_file var game_over_scene
+@export_file var game_won
 
-func _ready():
-	pass # game_over_ui.visible = false
-
-func _on_player_hit(is_alive):
-	# game_over_ui.visible = true
+func _on_player_hit():
+	lose_life()
+	var is_alive = calc_lives()
+	if not is_alive:
+		_on_player_died()
+	metrics_ui.update()
 	
-	if is_alive and Global.player_lives > 0:
-		Global.player_lives = Global.player_lives - 1
-		
-	if not is_alive or Global.player_lives <= 0:
-		player.dies()
-	
+func _on_player_fall():
+	lose_life()
+	var is_alive = calc_lives()
 
+	if is_alive:
+		get_tree().reload_current_scene()
+	else:
+		_on_player_died()
+	
+func lose_life():
+	if Global.props["life"] > 0:
+		Global.props["life"] = Global.props["life"] - 1
+
+func calc_lives():
+	return Global.props["life"] > 0
+
+func _on_player_died():
+	player.die()
+	Global.restart()
+	ItemsGlobal.restart()
+	CheckpointsGlobal.restart()
+	get_tree().change_scene_to_file(game_over_scene)
+
+# some items just count up, others have specific conditions
 func _on_item_collected(item_type):
-	if item_type == "apple":
-		Global.item_count = Global.item_count + 1
-		
-	if item_type == "life" and Global.player_lives < Global.total_lives:
-		Global.player_lives = Global.player_lives + 1
-	
-	metrics.update_display()
-
+	if item_type == "life":
+		if Global.props["life"] < Global.player_lives_max:
+			Global.props["life"] = Global.props["life"] + 1
+	else:
+		if not Global.props.has(item_type):
+			Global.props[item_type] = 0
+		Global.props[item_type] = Global.props[item_type] + 1
+	metrics_ui.update()
 
 func _on_NPC_update_metrics():
-	metrics.update_display()
+	metrics_ui.update()

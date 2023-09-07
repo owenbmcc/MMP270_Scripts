@@ -4,14 +4,14 @@ extends Control
 # change scene to load a level or another scene
 # quit to quit
 
-export (String, FILE, "*.tscn") var load_level_path
-export (String, FILE, "*.tscn") var instructions_path
+@export_file var load_level_path
+@export_file var instructions_path
 
 func _on_StartButton_pressed():
-	get_tree().change_scene(load_level_path)
+	get_tree().change_scene_to_file(load_level_path)
 
 func _on_InstructionsButton_pressed():
-	get_tree().change_scene(instructions_path)
+	get_tree().change_scene_to_file(instructions_path)
 
 func _on_QuitButton_pressed():
 	get_tree().quit()

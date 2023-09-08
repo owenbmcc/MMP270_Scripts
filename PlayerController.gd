@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 #	PlayerController uses the following inputs:
 #		MoveUp, MoveDown, MoveRight, MoveLeft, Jump, Projectile
@@ -14,6 +15,7 @@ extends CharacterBody2D
 @export var use_wall_jump : bool = false
 @export var projectile : PackedScene
 @export var projectile_toward_mouse : bool = false
+@export var projectile_gravity : bool = false
 @export var y_limit : int = 0
 
 # member vars 
@@ -22,6 +24,7 @@ var is_alive : bool = true # to allow scene to run without character updating
 #var velocity : Vector2 = Vector2()
 var is_jumping : bool = false # track if jumping for landing sound
 var jump_count : int = 0
+var projectile_pause : bool = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -69,10 +72,12 @@ func movement_update(delta):
 			velocity.y = move_toward(velocity.y, 0, speed)
 	
 	# spawn projectile
-	if Input.is_action_just_pressed("Projectile") and projectile:
-		$AnimatedSprite2D.play("Projectile")
-		is_moving = false
-		spawn_projectile()
+	if projectile:
+		if Input.is_action_just_pressed("Projectile"):
+			$AnimatedSprite2D.play("Projectile")
+			if is_on_floor():
+				is_moving = false
+			spawn_projectile()
 
 	# move player
 	move_and_slide()
@@ -143,15 +148,14 @@ func die():
 	# $DeathSound.play()
 
 func talk():
-	$AnimateSprite2D.play('Talk')
+	$AnimateSprite2D.play("Talk")
 	is_moving = false
 
 func spawn_projectile():
 	if projectile:
 		var p = projectile.instantiate()
 		# set direction of projectile in player direction
-		if not projectile_toward_mouse:
-			p.set_direction(-1 if $AnimatedSprite2D.flip_h else 1)
+		p.set_direction(projectile_toward_mouse, -1 if $AnimatedSprite2D.flip_h else 1, projectile_gravity)
 		p.position.x = self.position.x
 		p.position.y = self.position.y
 		owner.add_child(p)

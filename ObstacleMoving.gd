@@ -6,6 +6,7 @@ extends CharacterBody2D
 # detect player to start moving
 # use separate layers for each collider
 # Death and Attack animations can't loop
+# enemy needs to be centered in scene for collisions, raycast to work correctly
 
 # rename main CollisionShade2D to Collider for Platform Checker to change directions on platform edge
 
@@ -38,16 +39,15 @@ func _physics_process(_delta):
 
 func movement_update():
 	if stay_on_platform:
-#		print('wall ', is_on_wall())
-#		print('colliding ', $PlatformChecker.is_colliding())
 		if is_on_wall() or not $PlatformChecker.is_colliding():
 			direction = direction * -1 # switch direction
 			$AnimatedSprite2D.flip_h = direction == 1 # match animation to direction
 			$PlatformChecker.position.x = direction * $Collider.shape.radius
 			$HitBox.position.x = $HitBox.position.x * -1
 			$Attack.position.x = $Attack.position.x * -1
-			
-	velocity.y += gravity
+	
+	if not is_on_floor():
+		velocity.y += gravity
 	
 	if is_on_floor() and horizontal_move:
 		velocity.x = speed * direction

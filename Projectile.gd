@@ -1,19 +1,28 @@
 extends Area2D
 
-var speed = 200
+var speed = 600
 var velocity = Vector2.ZERO
 var is_flying = true
+var use_gravity : bool = false
+var aim_to_mouse : bool = false
 
 func _ready():
-	velocity = get_local_mouse_position().normalized()
-	
-func set_direction(direction):
-	velocity.x = direction * speed
-	velocity.y = 0
+	if aim_to_mouse:
+		velocity = get_local_mouse_position().normalized()
+
+func set_direction(_aim_to_mouse, direction, enable_gravity):
+	use_gravity = enable_gravity
+	aim_to_mouse = _aim_to_mouse
+	if not _aim_to_mouse:
+		velocity.x = direction * speed
+		velocity.y = -600 if enable_gravity else 0
+		velocity = velocity.normalized()
 
 func _physics_process(delta):
+#	print('v ', velocity)
 	if is_flying:
-		velocity.y += gravity * delta / speed
+		if use_gravity:
+			velocity.y += gravity * delta / speed
 		position += velocity * delta * speed
 		rotation = velocity.angle()
 		
@@ -21,13 +30,14 @@ func _physics_process(delta):
 		queue_free()
 
 func _on_area_entered(area):
+	print('proj area entered ', area)
 	# assume body is moving obstacle
 	area.get_parent().hit()
 	is_flying = false
-	$AnimatedSprite.play('Hit')
+	$AnimatedSprite2D.play("Hit")
 
 # hit tile map
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	is_flying = false
 	$AnimatedSprite2D.play("Hit")
 

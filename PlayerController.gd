@@ -19,6 +19,7 @@ class_name Player
 @export var y_limit : int = 0
 
 # member vars 
+var input_vector : Vector2 = Vector2.ZERO
 var is_moving : bool = true
 var is_alive : bool = true # to allow scene to run without character updating
 #var velocity : Vector2 = Vector2()
@@ -37,6 +38,10 @@ func _ready():
 	if y_limit == 0:
 		y_limit = get_viewport().size.y * 2
 
+func _unhandled_input(_event: InputEvent) -> void:
+	input_vector.x = Input.get_axis("MoveLeft", "MoveRight")
+	input_vector.y = Input.get_axis("MoveUp", "MoveDown")
+
 # this function will run every time the game engine updates physics
 func _physics_process(delta):
 	if is_alive:
@@ -48,9 +53,9 @@ func movement_update(delta):
 #	velocity.x = 0 # start by assuming player is not moving
 	
 	# capture user input
-	var x_direction = Input.get_axis("MoveLeft", "MoveRight")
-	if x_direction:
-		velocity.x = x_direction * speed
+
+	if input_vector.x:
+		velocity.x = input_vector.x * speed
 	elif use_slide:
 		if velocity.length() > (friction * delta):
 			velocity.x -= velocity.normalized().x * (friction * delta)
@@ -60,9 +65,8 @@ func movement_update(delta):
 		velocity.x = move_toward(velocity.x, 0, speed)
 		
 	if not use_gravity:
-		var y_direction = Input.get_axis("MoveUp", "MoveDown")
-		if y_direction:
-			velocity.y = y_direction * speed
+		if input_vector.y:
+			velocity.y = input_vector.y * speed
 		elif use_slide:
 			if velocity.length() > (friction * delta):
 				velocity.y -= velocity.normalized().y * (friction * delta)

@@ -2,6 +2,11 @@ extends Area2D
 
 # works with Dialogue Manager plugin to provide dialog for NPC character
 # set area collision to interact with Player only
+# Nodes
+	# Area2D : NPC
+		# AnimatedSprite2D
+		# CollisionShape2D
+		# Label
 
 @export var dialog_resource : DialogueResource
 @export var dialog_start : String = "start"
@@ -22,7 +27,6 @@ func _unhandled_input(_event : InputEvent) -> void:
 func show_dialog() -> void:
 	$Label.visible = false
 	DialogueManager.show_example_dialogue_balloon(dialog_resource, dialog_start)
-	
 	
 func show_label() -> void:
 	$Label.visible = true

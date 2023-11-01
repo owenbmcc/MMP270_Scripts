@@ -12,8 +12,6 @@ extends Area2D
 @export var dialog_start : String = "start"
 @export var trigger_on_enter : bool = true
 
-var player : CharacterBody2D
-
 func _ready() -> void:
 	$Label.visible = false
 
@@ -31,9 +29,7 @@ func show_dialog() -> void:
 func show_label() -> void:
 	$Label.visible = true
 
-func _on_body_entered(body) -> void:
-	if not player:
-		player = body
+func _on_body_entered(_body) -> void:
 	if trigger_on_enter:
 		show_dialog()
 	else:

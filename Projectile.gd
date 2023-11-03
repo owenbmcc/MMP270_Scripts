@@ -14,7 +14,7 @@ func set_direction(_aim_to_mouse, direction, enable_gravity):
 		velocity.y = -600 if enable_gravity else 0
 		velocity = velocity.normalized()
 	else:
-		velocity = get_local_mouse_position().normalized()
+		velocity = (get_global_mouse_position() - position).normalized()
 
 func _physics_process(delta):
 	if is_flying:

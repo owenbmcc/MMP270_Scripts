@@ -13,10 +13,11 @@ class_name Player
 @export var jump_force : int = 400
 @export var double_jump : bool = false
 @export var use_wall_jump : bool = false
+@export var y_limit : int = 0
 @export var projectile : PackedScene
 @export var projectile_toward_mouse : bool = false
 @export var projectile_gravity : bool = false
-@export var y_limit : int = 0
+@export var projectile_offset : Vector2 = Vector2.ZERO
 
 # member vars 
 var input_vector : Vector2 = Vector2.ZERO
@@ -158,8 +159,8 @@ func talk():
 func spawn_projectile():
 	if projectile:
 		var p = projectile.instantiate()
+		owner.add_child(p)
 		# set direction of projectile in player direction
 		p.set_direction(projectile_toward_mouse, -1 if $AnimatedSprite2D.flip_h else 1, projectile_gravity)
-		p.position.x = self.position.x
-		p.position.y = self.position.y
-		owner.add_child(p)
+		p.position.x = self.position.x + projectile_offset.x
+		p.position.y = self.position.y + projectile_offset.y

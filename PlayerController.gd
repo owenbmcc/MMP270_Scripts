@@ -161,6 +161,6 @@ func spawn_projectile():
 		var p = projectile.instantiate()
 		owner.add_child(p)
 		# set direction of projectile in player direction
-		p.set_direction(projectile_toward_mouse, -1 if $AnimatedSprite2D.flip_h else 1, projectile_gravity)
 		p.position.x = self.position.x + projectile_offset.x
 		p.position.y = self.position.y + projectile_offset.y
+		p.set_direction(projectile_toward_mouse, -1 if $AnimatedSprite2D.flip_h else 1, projectile_gravity)

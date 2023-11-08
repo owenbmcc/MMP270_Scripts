@@ -15,10 +15,14 @@ extends Area2D
 # custom dialog balloon
 @export var dialog_balloon : PackedScene
 
+var is_player_entered : bool = false
+
 func _ready() -> void:
 	$Label.visible = false
 
 func _unhandled_input(_event : InputEvent) -> void:
+	if not is_player_entered:
+		return
 	if trigger_on_enter:
 		return
 	if Input.is_action_just_pressed("StartDialog"):
@@ -37,11 +41,15 @@ func show_dialog() -> void:
 func show_label() -> void:
 	$Label.visible = true
 
-func _on_body_entered(_body) -> void:
+func _on_body_entered(body) -> void:
+	is_player_entered = true
+	await get_tree().physics_frame
+	body.input_vector = Vector2.ZERO
 	if trigger_on_enter:
 		show_dialog()
 	else:
 		show_label()
 
 func _on_body_exited(_body) -> void:
+	is_player_entered = false
 	$Label.visible = false

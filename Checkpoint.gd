@@ -3,6 +3,12 @@ extends Area2D
 # save position for player
 # saved globally bc scene restarts if player game overs
 
+# nodes
+	# Area2D (Checkpoint)
+		# AnimatedSprite2D
+		# CollisionShape2D
+		# AudioStreamPlayer (ActivateSound) (Optional)
+
 # boolean to prevent setting more than once
 var is_active : bool = false
 signal checkpoint_activated

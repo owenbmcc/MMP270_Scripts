@@ -1,5 +1,12 @@
 extends Area2D
 
+# any item that can be collected
+# nodes
+	# Area2D (ItemName ie Apple, Coin)
+		# AnimatedSprite2D
+		# CollisionShape2D
+		# AudioStreamPlayer (CollectedSound) (Optional)
+
 # item needs a name, can be tracked globally
 @export var collectible_type : String
 

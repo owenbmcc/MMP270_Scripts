@@ -2,6 +2,12 @@ extends Node
 
 # spawns player at saved checkpoints
 # add Node2D to scene using checkpoints
+# requires CheckpointsGlobal to be added to Autoload
+
+# add to Node in Level or Scene
+# nodes
+	# Level 1
+		# Node (CheckpointManager)
 
 # get current scene name, needed to track items, checkpoints
 @export var scene_name : String

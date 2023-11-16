@@ -6,12 +6,12 @@ var is_active = false
 signal on_activate # signal to scene manager
 var signal_sent = false # prevent sending signal multiple times
 
-func _on_PortalNextLevel_body_entered(body):
+func _on_body_entered(_body):
 	if not is_active:
 		is_active = true
-		$AnimatedSprite.play("Active")
+		$AnimatedSprite2D.play("Entered")
 
-func _on_AnimatedSprite_animation_finished():
+func _on_animation_finished():
 	if is_active and not signal_sent:
 		signal_sent = true
 		emit_signal("on_activate")

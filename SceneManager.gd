@@ -7,8 +7,21 @@ extends Node
 @export var player : Node2D
 @export var metrics_ui : Control
 
+# references to scene path to change scene
 @export_file var game_over_scene
-@export_file var game_won
+@export_file var win_game_scene
+
+# references to node, to load in scene
+# add in UI canvas layer
+@export var game_over_ui : Control
+@export var win_game_ui : Control
+
+func _ready():
+	# hide uis if they exist
+	if game_over_ui:
+		game_over_ui.visible = false
+	if win_game_ui:
+		win_game_ui.visible = false
 
 func _on_player_hit():
 	lose_life()
@@ -36,9 +49,15 @@ func calc_lives():
 func _on_player_died():
 	player.die()
 	Global.restart()
-	ItemsGlobal.restart()
-	CheckpointsGlobal.restart()
+	# ItemsGlobal.restart()
+	# CheckpointsGlobal.restart()
+	
+	# change to game over scene
 	get_tree().change_scene_to_file(game_over_scene)
+	
+	# or load ui in scene
+	# if game_over_ui:
+		# game_over_ui.visible = true
 
 # some items just count up, others have specific conditions
 func _on_item_collected(item_type):
@@ -53,3 +72,11 @@ func _on_item_collected(item_type):
 
 func _on_NPC_update_metrics():
 	metrics_ui.update()
+
+func _on_win_game():
+	# change scenes:
+	# get_tree().change_scene_to_file(win_game_scene)
+	
+	# or load ui in scene
+	if win_game_ui:
+		win_game_ui.visible = true

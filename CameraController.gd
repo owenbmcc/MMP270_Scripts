@@ -1,5 +1,12 @@
 extends Camera2D
 
+# use this to make the camera follow the player 
+# only if camera cannot be child of player
+# nodes:
+	# Level 1
+		# Player
+		# Camera
+
 # get reference to player to track/follow position
 @export var player : Node2D
 

@@ -1,12 +1,13 @@
 extends Area2D
 
 # works with Dialogue Manager plugin to provide dialog for NPC character
-# set area collision to interact with Player only
-# Nodes
-	# Area2D : NPC
-		# AnimatedSprite2D
-		# CollisionShape2D
-		# Label
+# on player enter, either starts dialog, or shows label to confirm
+
+# nodes
+# Area2D (NPC) # Layer: NPC, Mask: Player
+	# AnimatedSprite2D
+	# CollisionShape2D
+	# Label
 
 @export var dialog_resource : DialogueResource
 @export var dialog_start : String = "start"
@@ -41,6 +42,8 @@ func show_dialog() -> void:
 func show_label() -> void:
 	$Label.visible = true
 
+# connect _on_body_entered signal from Area2D/NPC root node
+# adds player entered, shows label if using label
 func _on_body_entered(body) -> void:
 	is_player_entered = true
 	await get_tree().physics_frame
@@ -50,6 +53,8 @@ func _on_body_entered(body) -> void:
 	else:
 		show_label()
 
+# connect _on_body_exited signal from Area2D/NPC root node
+# removes player entered and hides label
 func _on_body_exited(_body) -> void:
 	is_player_entered = false
 	$Label.visible = false

@@ -2,6 +2,9 @@ extends Node
 
 # track objects removed from scene
 # 0 means they are removed, 1 still active
+# nodes 
+# Node2D (Level 1)
+	# Node (ItemManager)
 
 # get current scene name, needed to track items, checkpoints
 @export var scene_name : String

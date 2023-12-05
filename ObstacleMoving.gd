@@ -5,10 +5,26 @@ extends CharacterBody2D
 # attack player in attack box, deals one damage
 # detect player to start moving
 # use separate layers for each collider
-# Death and Attack animations can't loop
+# Death and Attack animations No Loop
 # enemy needs to be centered in scene for collisions, raycast to work correctly
-
 # rename main CollisionShade2D to Collider for Platform Checker to change directions on platform edge
+
+# nodes
+# CharacterBody2D (Enemy, specific enemy name) 
+	# -> Layer: Enemy, Mask: Tiles/Platforms (optional Player)
+	# AnimatedSprite2D # Walk, Idle, Death, Attack animations
+	# Raycast2D (PlatformChecker) # Mask: Tiles/Platforms
+	# CollisionShape2D (Collider)
+	# Area2D (Attack) # Layer: Attack, Mask: Player
+		# CollisionShape2D
+	# Area2D (HitBox) # Layer: HitBox, Mask: Player
+		# CollisionShape2D
+	# Area2D (Detect) # Layer: Detect, Mask: Player
+		# CollisionShape2D
+	# Timer (HitTimeout)
+	# AudioStreamPlayer (DeathSound)
+	# AudioStreamPlayer (HitSound)
+
 
 # editor settings
 @export var is_moving : bool = true
@@ -66,11 +82,13 @@ func hit():
 	# $DeathSound.play()
 
 # if player jump on head or another part, hits with projectile
+# connect body_entered signal from HitBox
 func _on_HitBox_body_entered(_body):
 	if is_alive:
 		hit()
 
 # area that harms/kills player
+# connect body_entered signal from Attack
 func _on_Attack_body_entered(body):
 	
 	if is_alive and body.is_alive and $HitTimeout.is_stopped():
@@ -83,11 +101,13 @@ func _on_Attack_body_entered(body):
 		# $HitSound.play()
 
 # area that detect player is nearby
+# connect body_entered signal from Detect
 func _on_Detect_body_entered(_body):
 	if is_alive:
 		if activate_on_player_detect:
 			horizontal_move = true
 
+# connect animation_finished signal from AnimatedSprite2D
 func _on_animation_finished():
 	
 	# if dead, remove object

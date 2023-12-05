@@ -14,10 +14,7 @@ class_name Player
 @export var double_jump : bool = false
 @export var use_wall_jump : bool = false
 @export var y_limit : int = 0
-@export var projectile : PackedScene
-@export var projectile_toward_mouse : bool = false
-@export var projectile_gravity : bool = false
-@export var projectile_offset : Vector2 = Vector2.ZERO
+
 
 # member vars 
 var input_vector : Vector2 = Vector2.ZERO
@@ -75,14 +72,6 @@ func movement_update(delta):
 				velocity.y = 0
 		else:
 			velocity.y = move_toward(velocity.y, 0, speed)
-	
-	# spawn projectile
-	if projectile:
-		if Input.is_action_just_pressed("Projectile"):
-			$AnimatedSprite2D.play("Projectile")
-			if is_on_floor():
-				is_moving = false
-			spawn_projectile()
 
 	# move player
 	move_and_slide()
@@ -130,8 +119,10 @@ func update_animation():
 	# change sprite direction
 	if velocity.x < -1:
 		$AnimatedSprite2D.flip_h = true
+		$ProjectileEmitter.direction = -1
 	if velocity.x > 1:
 		$AnimatedSprite2D.flip_h = false
+		$ProjectileEmitter.direction = 1
 
 func enemy_collision():
 	is_moving = false # player movement suspended before determining state
@@ -155,12 +146,8 @@ func die():
 func talk():
 	$AnimateSprite2D.play("Talk")
 	is_moving = false
-
-func spawn_projectile():
-	if projectile:
-		var p = projectile.instantiate()
-		owner.add_child(p)
-		# set direction of projectile in player direction
-		p.position.x = self.position.x + projectile_offset.x
-		p.position.y = self.position.y + projectile_offset.y
-		p.set_direction(projectile_toward_mouse, -1 if $AnimatedSprite2D.flip_h else 1, projectile_gravity)
+	
+func _on_projectile():
+	$AnimatedSprite2D.play("Projectile")
+	if is_on_floor():
+		is_moving = false

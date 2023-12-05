@@ -33,9 +33,11 @@ func _on_area_entered(area):
 	$AnimatedSprite2D.play("Hit")
 
 # hit tile map
-func _on_body_entered(_body):
+func _on_body_entered(body):
 	is_flying = false
 	$AnimatedSprite2D.play("Hit")
+	if body.name == 'Player':
+		body.enemy_collision()
 
 # remove projectile after hit
 func _on_animation_finished():

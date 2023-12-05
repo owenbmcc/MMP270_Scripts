@@ -2,6 +2,7 @@ extends Node
 
 # track checkpoints in scene
 # this only saves the spawn_position and info between scenes
+# Add to Autoload scripts
 
 # save a spawn position where character starts
 var spawn_position : Vector2 = Vector2.ZERO

@@ -49,8 +49,8 @@ func calc_lives():
 func _on_player_died():
 	player.die()
 	Global.restart()
-	# ItemsGlobal.restart()
-	# CheckpointsGlobal.restart()
+	ItemsGlobal.restart()
+	CheckpointsGlobal.restart()
 	
 	# change to game over scene
 	get_tree().change_scene_to_file(game_over_scene)

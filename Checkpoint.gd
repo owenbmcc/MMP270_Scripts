@@ -16,7 +16,7 @@ signal checkpoint_activated
 func _on_body_entered(_body):
 	if not is_active:
 		is_active = true
-		$AnimatedSprite2D.play("Active")
+		$AnimatedSprite2D.play("Entered")
 #		CheckpointsGlobal.update_spawn_position(position)
 		emit_signal("checkpoint_activated", position)
 		

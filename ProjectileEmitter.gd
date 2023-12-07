@@ -1,6 +1,8 @@
 extends Node2D
 
-# emits projectiles
+"""
+emits projectiles
+"""
 
 @export var projectile : PackedScene
 @export var projectile_toward_mouse : bool = false

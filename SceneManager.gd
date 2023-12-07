@@ -1,7 +1,8 @@
 extends Node
-
-# added in each scene to connect events to ui and game logic
-# logic for things like player deaths etc.
+"""
+added in each scene to connect events to ui and game logic
+logic for things like player deaths etc.
+"""
 
 # get reference to player to set position
 @export var player : Node2D

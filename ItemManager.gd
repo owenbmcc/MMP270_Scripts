@@ -1,23 +1,34 @@
 extends Node
+"""
+track objects removed from scene
+0 means they are removed, 1 still active
+save_objects_states save the current items states, 
+	connect to signal for player death
+	or checkpoints etc
 
-# track objects removed from scene
-# 0 means they are removed, 1 still active
-# nodes 
-# Node2D (Level 1)
-	# Node (ItemManager)
+node setup
+• Node2D (Level 1)
+	• Node (ItemManager)
+"""
+
 
 # get current scene name, needed to track items, checkpoints
 @export var scene_name : String
 
 # get all of the removable objects in a the scene (enemies and items)
-@export var track_objects : Array[NodePath]
+@export var track_nodes : Array[NodePath] # track specific nodes
+@export var track_children : Array[NodePath] # track all children of a node
 var scene_objects : Dictionary = {}
 
 func _ready():
 	
-	for node_path in track_objects:
-		var obj = get_node(node_path)
-		scene_objects[obj.name] = obj
+	for node_path in track_nodes:
+		var node = get_node(node_path)
+		scene_objects[node.name] = node
+		
+	for node_path in track_children:
+		for node in get_node(node_path).get_children():
+			scene_objects[node.name] = node
 	
 	# checkpoints -- get scene name from var or parent node name
 	if scene_name.length() == 0:

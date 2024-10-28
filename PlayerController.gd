@@ -5,6 +5,8 @@ class_name Player
 #		MoveUp, MoveDown, MoveRight, MoveLeft, Jump, Projectile
 #	These are defined in Project > Project Settings > Input Map
 
+#	requires AnimatedSprite2D with Idle, Walk, Jump, Projectile animations
+
 # physics settings for player
 @export var speed : int = 100
 @export var use_slide : bool = false
@@ -14,7 +16,7 @@ class_name Player
 @export var double_jump : bool = false
 @export var use_wall_jump : bool = false
 @export var y_limit : int = 0
-
+@export var use_projectile : bool = false
 
 # member vars 
 var input_vector : Vector2 = Vector2.ZERO
@@ -119,10 +121,12 @@ func update_animation():
 	# change sprite direction
 	if velocity.x < -1:
 		$AnimatedSprite2D.flip_h = true
-		$ProjectileEmitter.direction = -1
+		if use_projectile:
+			$ProjectileEmitter.direction = -1
 	if velocity.x > 1:
 		$AnimatedSprite2D.flip_h = false
-		$ProjectileEmitter.direction = 1
+		if use_projectile:
+			$ProjectileEmitter.direction = 1
 
 func enemy_collision():
 	is_moving = false # player movement suspended before determining state

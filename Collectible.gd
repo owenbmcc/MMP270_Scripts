@@ -1,11 +1,18 @@
-extends Area2D
+"""
+any item that can be collected
+nodes
+• Area2D (ItemName ie Apple, Coin)
+	• AnimatedSprite2D
+	• CollisionShape2D
+	• AudioStreamPlayer (CollectedSound) (Optional)
 
-# any item that can be collected
-# nodes
-	# Area2D (ItemName ie Apple, Coin)
-		# AnimatedSprite2D
-		# CollisionShape2D
-		# AudioStreamPlayer (CollectedSound) (Optional)
+signals
+connect Area2D body_entered -> _on_body_entered
+connect AnimatedSprite2D animation_finished() -> _on_animation_finished
+connect Collectible (ItemName) -> ItemManager _on_collectible_collected
+"""
+
+extends Area2D
 
 # item needs a name, can be tracked globally
 @export var collectible_type : String
@@ -33,5 +40,3 @@ func _on_body_entered(_body):
 func _on_animation_finished():
 	if is_collected:
 		queue_free()
-
-

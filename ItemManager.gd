@@ -1,4 +1,3 @@
-extends Node
 """
 track objects removed from scene
 0 means they are removed, 1 still active
@@ -9,8 +8,14 @@ save_objects_states save the current items states,
 node setup
 • Node2D (Level 1)
 	• Node (ItemManager)
+	
+signals
+Checkpoint on_activated -> _on_checkpoint_activated
+Collectible on_collected -> _on_collectible_collected
+Player died -> _on_player_died
 """
 
+extends Node
 
 # get current scene name, needed to track items, checkpoints
 @export var scene_name : String
@@ -20,7 +25,14 @@ node setup
 @export var track_children : Array[NodePath] # track all children of a node
 var scene_objects : Dictionary = {}
 
+var global_items_ref # placeholder for items global
+
 func _ready():
+	
+	global_items_ref = get_node_or_null("/root/ItemsGlobal")
+	if global_items_ref == null:
+		print("Setup error: ItemsGlobal must be added to Autoload")
+		return
 	
 	for node_path in track_nodes:
 		var node = get_node(node_path)
@@ -36,19 +48,19 @@ func _ready():
 	
 	# if this is the current scene check if objects should be removed
 	# 0 means remove object (use enum?)
-	if scene_name == ItemsGlobal.current_scene:
-		for obj_name in ItemsGlobal.scene_objects[scene_name]:
-			if ItemsGlobal.scene_objects[scene_name][obj_name] == 0:
+	if scene_name == global_items_ref.current_scene:
+		for obj_name in global_items_ref.scene_objects[scene_name]:
+			if global_items_ref.scene_objects[scene_name][obj_name] == 0:
 				scene_objects[obj_name].queue_free()
 	
 	# if this is a new scene, update the player position
-	if scene_name != ItemsGlobal.current_scene:
-		ItemsGlobal.current_scene = scene_name
+	if scene_name != global_items_ref.current_scene:
+		global_items_ref.current_scene = scene_name
 		# get a list of all objects, 1 is keep them, 0 is remove them
-		ItemsGlobal.scene_objects[scene_name] = {}
+		global_items_ref.scene_objects[scene_name] = {}
 		for obj_name in scene_objects:
 			# to start all this objects exist 
-			ItemsGlobal.scene_objects[scene_name][obj_name] = 1
+			global_items_ref.scene_objects[scene_name][obj_name] = 1
 
 # if player game overs check objects in scene
 # conntect game over to scene manager
@@ -58,14 +70,14 @@ func _on_player_died():
 func save_objects_states():
 	for obj_name in scene_objects:
 		if not is_instance_valid(scene_objects[obj_name]):
-			ItemsGlobal.scene_objects[scene_name][obj_name] = 0
+			global_items_ref.scene_objects[scene_name][obj_name] = 0
 
 # tracks number of collectibles
 # specific logic goes in scene manager
 func _on_collectible_collected(collectible_type):
-	if not ItemsGlobal.collectibles[collectible_type]:
-		ItemsGlobal.collectibles[collectible_type] = 0
-	ItemsGlobal.collectibles[collectible_type] = ItemsGlobal.collectibles[collectible_type] + 1
+	if not global_items_ref.collectibles[collectible_type]:
+		global_items_ref.collectibles[collectible_type] = 0
+	global_items_ref.collectibles[collectible_type] = global_items_ref.collectibles[collectible_type] + 1
 
 # connect to checkpoints to save state of objects
 func _on_checkpoint_activated(_checkpoint_position):

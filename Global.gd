@@ -1,3 +1,9 @@
+"""
+global script to save variables,
+values, etc.
+between scenes
+add to Autoload, Project > Project Settings > Globals > Autoload
+"""
 extends Node
 
 # save values that need to exist for multiple levels

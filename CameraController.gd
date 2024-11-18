@@ -1,11 +1,13 @@
-extends Camera2D
+"""
+use this to make the camera follow the player 
+only if camera cannot be child of player
+nodes
+• Level 1
+	• Player
+	• Camera2D (CameraController)
+"""
 
-# use this to make the camera follow the player 
-# only if camera cannot be child of player
-# nodes:
-	# Level 1
-		# Player
-		# Camera
+extends Camera2D
 
 # get reference to player to track/follow position
 @export var player : Node2D
@@ -26,8 +28,16 @@ extends Camera2D
 # speed to catch up to player
 # can't be faster than player
 @export var follow_speed : int = 100 
+
+func _ready():
 	
+	if player == null:
+		print("Setup error: Add player to CameraController node")
+		return
+
 func _process(delta):
+	if player == null:
+		return
 
 	if follow_horizontal:
 		# if the player is in the right or left quarter of screen, 
@@ -48,4 +58,3 @@ func _process(delta):
 			
 	elif track_vertical:
 		position.y = player.position.y
-

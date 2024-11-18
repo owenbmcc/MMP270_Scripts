@@ -1,27 +1,46 @@
+"""
+UI menus, used for splash screen, game over, etc.
+connect signals from UI buttons
+change scene to load a level or another scene
+quit to quit
+
+node setup
+• Control (StartMenu, GameOverMenu, WinMenu, Instructions, etc)
+	(Example layout, should be modified for specific design)
+	• CenterContainer
+		• HBoxContainer
+			• CenterContainer
+				• TextureRect (Title, Graphic)
+			• CenterContainer
+				• VBoxContainer
+				• TextureButton (StartButton)
+				• TextureButton (QuitButton)
+				• More buttons
+	• AudioStreamPlayer (HoverSound)
+	• AudioStreamPlayer (BackgroundMusic)
+
+signals
+StartButton pressed -> _on_StartButton_pressed
+InstructionsButton pressed -> _on_InstructionsButton_pressed
+QuitButton pressed -> _on_QuitButton_pressed
+"""
+
 extends Control
-
-# used for multiple UI menus
-# connect signals from UI buttons
-# change scene to load a level or another scene
-# quit to quit
-
-# nodes
-# Control (StartMenu, GameOverMenu, WinMenu, Instructions, etc)
-	# Example layout, should be modified for specific design
-	# CenterContainer
-		# HBoxContainer
-			# CenterContainer
-				# TextureRect (Title, Graphic)
-			# CenterContainer
-				# VBoxContainer
-				# TextureButton (StartButton)
-				# TextureButton (QuitButton)
-				# More buttons
-	# AudioStreamPlayer (HoverSound)
-	# AudioStreamPlayer (BackgroundMusic)
 
 @export_file var load_level_path
 @export_file var instructions_path
+
+func _ready():
+	
+	#check for setup issues
+	if load_level_path == null:
+		print("Menu setup error: Add level to Load Level Path")
+		return
+	
+	if instructions_path == null:
+		print("Menu setup error: Add istructions to Instructions Path (or remove)")
+		return
+	
 
 # connect pressed signal from start button
 func _on_StartButton_pressed():

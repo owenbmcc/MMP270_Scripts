@@ -1,17 +1,18 @@
+"""
+metric that is either on or off based on a value number, like number of lives
+multiple sprites to display current value
+add to metrics manager, as instance or in scene
+
+node setup
+• Control (Metrics)
+	• Control (Item to count) <- Script here
+		• Sprite/Image for each count, for example 3 lives
+		• AnimatedSprite2D (or TextureRect/Sprite) icon image for metric
+		• AnimatedSprite2D (or TextureRect/Sprite) icon image for metric
+		• AnimatedSprite2D (or TextureRect/Sprite) icon image for metric
+"""
+
 extends Node
-
-# metric that is either on or off based on a value number, like number of lives
-# multiple sprites to display current value
-# add to metrics manager, as instance or in scene
-
-# nodes
-# Control (Metrics)
-	# Control (Item to count) <- Script here
-		# Sprite/Image for each count, for example 3 lives
-		# AnimatedSprite2D (or TextureRect/Sprite) icon image for metric
-		# AnimatedSprite2D (or TextureRect/Sprite) icon image for metric
-		# AnimatedSprite2D (or TextureRect/Sprite) icon image for metric
-
 
 @export var metric_name : String = "item"
 @export var display_sprites_paths : Array[NodePath]

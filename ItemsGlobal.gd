@@ -1,3 +1,9 @@
+"""
+track items, enemies, objects that should be removed from a scene
+add to Autoload
+Project > Project Settings > Globals > Autoload
+"""
+
 extends Node
 
 # track all items and enemies ...

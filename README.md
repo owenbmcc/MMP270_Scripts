@@ -12,9 +12,9 @@ tab implies hierarchy, parent/child relationships
 
 node example  
 - • Area2D  
-    - • AnimatedSprite2D  
-    - • CollisionShape2D  
-    - • AudioStreamPlayer2D  
+	- • AnimatedSprite2D  
+	- • CollisionShape2D  
+	- • AudioStreamPlayer2D  
 
 \# is attach script  
 • Area2D #Collectible.gd
@@ -30,7 +30,7 @@ node example
 
 ~ = optional  
 - • Area2D  
-    - ~ AudioStreamPlayer2D  
+	- ~ AudioStreamPlayer2D  
 *or*  
 • Area2D (Layer: Enemy, ~Mask: Player)  
 

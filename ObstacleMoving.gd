@@ -22,8 +22,8 @@ node setup
 	• Area2D (Detect) (Layer: Detect, Mask: Player)
 		• CollisionShape2D
 	• Timer (HitTimeout) (Oneshot=true)
-	• AudioStreamPlayer2D (DeathSound)
-	• AudioStreamPlayer2D (HitSound)
+	~ AudioStreamPlayer2D (DeathSound)
+	~ AudioStreamPlayer2D (HitSound)
 
 AnimatedSprite2D animations: Walk, Idle, Death (loop=false), Attack (loop=false)
 

@@ -5,6 +5,7 @@
 • Area2D #ObstacleStatic.gd (ObstacleName) (Layer: Enemy, Mask: Player)
 	• Sprite2D/AnimatedSprite2D
 	• CollisionShape2D
+	• Timer (HitTimeout) (oneshot=true)
 	~ AudioStreamPlayer2D (HitSound)
 	~ StaticBody2D (if player should not pass through the obstacle)
 		• CollisionShape2D

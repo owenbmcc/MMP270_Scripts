@@ -1,30 +1,39 @@
+"""
+basic moving enemy, set up with enemy facing left
+dies on player hit
+attack player in attack box, deals damage
+(optional) detect player to start moving
+separate layers for each collider
+Death and Attack animations No Loop
+enemy needs to be centered in scene for collisions, raycast to work correctly
+rename main CollisionShade2D to Collider for Platform Checker to change directions on platform edge
+
+calls enemy_collision on player
+
+node setup
+• CharacterBody2D #ObstacleMoving.gd (EnemyName) (Layer: Enemy, Mask: Platforms, ~Player)
+	• AnimatedSprite2D
+	• Raycast2D (PlatformChecker) (Layer off, Mask: Tiles/Platforms)
+	• CollisionShape2D (Collider)
+	• Area2D (Attack) (Layer: Attack, Mask: Player)
+		• CollisionShape2D
+	• Area2D (HitBox) (Layer: HitBox, Mask: Player)
+		• CollisionShape2D
+	• Area2D (Detect) (Layer: Detect, Mask: Player)
+		• CollisionShape2D
+	• Timer (HitTimeout) (Oneshot=true)
+	• AudioStreamPlayer2D (DeathSound)
+	• AudioStreamPlayer2D (HitSound)
+
+AnimatedSprite2D animations: Walk, Idle, Death (loop=false), Attack (loop=false)
+
+signals
+Area2D (Attack) body_entered -> _on_Attack_body_entered
+Area2D (Detect) body_entered -> _on_Detect_body_entered
+Area2D (HitBox) body_entered -> _on_HitBox_body_entered
+"""
+
 extends CharacterBody2D
-
-# basic moving enemy
-# dies on player hit
-# attack player in attack box, deals one damage
-# detect player to start moving
-# use separate layers for each collider
-# Death and Attack animations No Loop
-# enemy needs to be centered in scene for collisions, raycast to work correctly
-# rename main CollisionShade2D to Collider for Platform Checker to change directions on platform edge
-
-# nodes
-# CharacterBody2D (Enemy, specific enemy name) 
-	# -> Layer: Enemy, Mask: Tiles/Platforms (optional Player)
-	# AnimatedSprite2D # Walk, Idle, Death, Attack animations
-	# Raycast2D (PlatformChecker) # Mask: Tiles/Platforms
-	# CollisionShape2D (Collider)
-	# Area2D (Attack) # Layer: Attack, Mask: Player
-		# CollisionShape2D
-	# Area2D (HitBox) # Layer: HitBox, Mask: Player
-		# CollisionShape2D
-	# Area2D (Detect) # Layer: Detect, Mask: Player
-		# CollisionShape2D
-	# Timer (HitTimeout)
-	# AudioStreamPlayer (DeathSound)
-	# AudioStreamPlayer (HitSound)
-
 
 # editor settings
 @export var is_moving : bool = true

@@ -1,16 +1,34 @@
+"""
+requires Dialogue Manager plugin
+https://github.com/nathanhoad/godot_dialogue_manager
+import from AssetLib
+
+add dialog for NPC character
+on player enter, either starts dialog, or shows label to confirm
+
+for label confirmation, add "StartDialog" to Input Map
+Project > Project Settings > Input Map
+
+node setup
+• Area2D #NPCDialog.gd (NPC Name) (Layer: NPC, Mask: Player)
+	• AnimatedSprite2D
+	• CollisionShape2D
+	~ Label
+
+signals
+Area2D body_entered -> _on_body_entered
+Area2D body_exited -> _on_body_exited
+"""
+
 extends Area2D
 
-# works with Dialogue Manager plugin to provide dialog for NPC character
-# on player enter, either starts dialog, or shows label to confirm
-
-# nodes
-# Area2D (NPC) # Layer: NPC, Mask: Player
-	# AnimatedSprite2D
-	# CollisionShape2D
-	# Label
-
+# load dialog resource file created with Dialogue Manager
 @export var dialog_resource : DialogueResource
+
+# match dialogue name to dialog_start
 @export var dialog_start : String = "start"
+
+# set false to open confirmation label
 @export var trigger_on_enter : bool = true
 
 # custom dialog balloon

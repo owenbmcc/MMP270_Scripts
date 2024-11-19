@@ -4,9 +4,8 @@ connect signals from UI buttons
 change scene to load a level or another scene
 quit to quit
 
-node setup
-• Control (StartMenu, GameOverMenu, WinMenu, Instructions, etc)
-	(Example layout, should be modified for specific design)
+node setup (Example layout, should be modified for specific design)
+• Control #Menu.gd (StartMenu, GameOverMenu, WinMenu, Instructions, etc)
 	• CenterContainer
 		• HBoxContainer
 			• CenterContainer
@@ -16,13 +15,14 @@ node setup
 				• TextureButton (StartButton)
 				• TextureButton (QuitButton)
 				• More buttons
-	• AudioStreamPlayer (HoverSound)
-	• AudioStreamPlayer (BackgroundMusic)
+	~ AudioStreamPlayer (HoverSound)
+	~ AudioStreamPlayer (BackgroundMusic)
 
 signals
 StartButton pressed -> _on_StartButton_pressed
 InstructionsButton pressed -> _on_InstructionsButton_pressed
 QuitButton pressed -> _on_QuitButton_pressed
+~ (Any)Button mouse_entered -> _on_mouse_entered
 """
 
 extends Control

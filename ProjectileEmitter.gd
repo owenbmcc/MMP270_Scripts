@@ -1,10 +1,25 @@
-extends Node2D
 
 """
 emits projectiles
-"""
+add to player or enemy
 
+add "Projectile" to Input Map
+Project > Project Settings > Input Map
+
+projectile scene is PackedScene, not part of the hierarchy
+
+node setup
+• Player
+	• Node2D #ProjectileEmitter.gd (ProjectileEmitter)
+
+signals
+on_projectile -> Player _on_projectile
+"""
+extends Node2D
+
+# load projectile scene here
 @export var projectile : PackedScene
+
 @export var projectile_toward_mouse : bool = false
 @export var projectile_gravity : bool = false
 @export var use_input : bool = true
@@ -30,4 +45,3 @@ func spawn_projectile():
 	if not use_input:
 		d = get_parent().direction
 	p.set_direction(projectile_toward_mouse, d, projectile_gravity)
-

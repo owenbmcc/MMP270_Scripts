@@ -1,8 +1,19 @@
-extends Area2D
-
+"""
 # obstacle that hurts player when colliding
 # option to remove
 
+• Area2D #ObstacleStatic.gd (ObstacleName) (Layer: Enemy, Mask: Player)
+	• Sprite2D/AnimatedSprite2D
+	• CollisionShape2D
+	~ AudioStreamPlayer2D (HitSound)
+	~ StaticBody2D (if player should not pass through the obstacle)
+		• CollisionShape2D
+
+"""
+
+extends Area2D
+
+# remove sprite after collision
 @export var remove_on_collision : bool = false
 
 func _body_entered(body):

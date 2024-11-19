@@ -1,6 +1,19 @@
-extends Area2D
+"""
+Portal script, triggers "Entered" animation, loads new level
+load a level in Load Level Path
 
-# Portal script, triggers "Entered" animation, loads new level
+node setup
+• Area2D #TriggerScene.gd (Portal)
+	• AnimatedSprite2D
+	~ AudioStreamPlayer2D (EnteredSound)
+
+AnimateSprite2D animations: default/Idle (autoplay=true), Entered (loop=false)
+
+signals
+AnimatedSprite2D animation_finished -> _on_animation_finished
+"""
+
+extends Area2D
 
 # pick scene/level to load
 @export_file var load_level_path

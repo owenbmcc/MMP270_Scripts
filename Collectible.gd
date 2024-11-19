@@ -1,15 +1,19 @@
 """
 any item that can be collected
-nodes
-• Area2D (ItemName ie Apple, Coin)
+ItemName should match property in Global.gd to track
+
+node setup
+• Area2D #Collectible.gd (ItemName ie Apple, Coin) (Layer: Collectible, Mask: Player)
 	• AnimatedSprite2D
 	• CollisionShape2D
-	• AudioStreamPlayer (CollectedSound) (Optional)
+	~ AudioStreamPlayer (CollectedSound)
 
 signals
-connect Area2D body_entered -> _on_body_entered
-connect AnimatedSprite2D animation_finished() -> _on_animation_finished
-connect Collectible (ItemName) -> ItemManager _on_collectible_collected
+Area2D body_entered -> _on_body_entered
+AnimatedSprite2D animation_finished() -> _on_animation_finished
+on_collected -> ItemsManager _on_collectible_collected
+
+AnimatedSprite2D animations Idle/default (autoplay=true), Collected (loop=false)
 """
 
 extends Area2D

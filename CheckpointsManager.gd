@@ -7,7 +7,7 @@ Project > Project Settings > Globals > Autoload
 add to Node in Level or Scene
 nodes
 • Level 1
-	• Node (CheckpointManager)
+	• Node #CheckpointsManager.gd (CheckpointsManager)
 
 connect signals from checkpoints -> _on_checkpoint_activated
 """
@@ -20,7 +20,8 @@ extends Node
 # get reference to player to set position
 @export var player : Node2D
 
-var checkpoints_global_ref : Node # placeholder for checkpoints global
+# reference to global script to avoid errors
+var checkpoints_global_ref : Node 
 
 func _ready():
 	# check for CheckpointsGlobal in Autoload
@@ -44,7 +45,6 @@ func _ready():
 		
 	# set the player to the current spawn position to keep up with checkpoints
 	player.position = checkpoints_global_ref.spawn_position
-
 
 func _on_checkpoint_activated(checkpoint_position):
 	checkpoints_global_ref.update_spawn_position(checkpoint_position)

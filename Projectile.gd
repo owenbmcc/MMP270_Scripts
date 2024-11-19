@@ -1,3 +1,20 @@
+"""
+spawn from projectile emitter, on player or enemy
+
+node setup
+• Area2D #Projectile.gd (Projectile) (Layer: Projectile, Mask: Platforms, Enemy/Player)
+	• AnimatedSprite2D
+	• CollisionShape2D
+	• VisibleOnScreenNotifier2D
+	~ AudioStreamPlayer (HitSound)
+
+AnimateSprite2D animations: default/Idle (autoplay=true), Hit (loop=false)
+
+signals
+Area2D area_entered -> _on_area_entered
+Area2D body_entered -> _on_body_entered
+AnimatedSprite2D animation_finished -> _on_animation_finished
+"""
 extends Area2D
 
 var speed = 600

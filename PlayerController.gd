@@ -1,11 +1,31 @@
+"""
+simple 2d player controller
+set up with player art facing right
+
+• CharacterBody2D #PlayerController.gd (Player)
+	• AnimatedSprite2D
+	• CollisionShape2D
+	~ ProjectileEmitter
+	~ AudioStreamPlayer2D (JumpSound)
+	~ AudioStreamPlayer2D (LandSound)
+	~ AudioStreamPlayer2D (DeathSound)
+
+PlayerController uses the following inputs:
+	MoveUp, MoveDown, MoveRight, MoveLeft, Jump, Projectile
+These are defined in Project > Project Settings > Input Map
+
+AnimatedSprite2D animations: Idle, Walk, Jump, Projectile 
+
+signals
+player_fall -> SceneManager _on_player_fall
+player_hit -> SceneManager _on_player_hit
+AnimatedSprite2D animation_finished -> _on_animation_finished
+ProjectileEmitter on_projective -> _on_projectile
+
+"""
+
 extends CharacterBody2D
 class_name Player
-
-#	PlayerController uses the following inputs:
-#		MoveUp, MoveDown, MoveRight, MoveLeft, Jump, Projectile
-#	These are defined in Project > Project Settings > Input Map
-
-#	requires AnimatedSprite2D with Idle, Walk, Jump, Projectile animations
 
 # physics settings for player
 @export var speed : int = 100

@@ -3,13 +3,12 @@ updates visual display based on global items
 item strings have to match Global items/collectibles
 add on top of regular level
 
-node setup
-• Control (Metrics) (MentricsManager)
-	• Add control node for each metric (examples below)
-	• Control (Items, Coins, Points)
-		• AnimatedSprite2D
+node setup (add control node for each metric, examples below)
+• Control #MetricsManager.gd (MetricsManager)
+	• Control #MetricCount.gd (Items, Coins, Points)
 		• Label
-	• Control (Life, anything with set number)
+		~ AnimatedSprite2D (Icon)
+	• Control #MetricToggle.gd (Life, anything with set number) 
 		• AnimatedSprite2D (Life1)
 		• AnimatedSprite2D (Life2)
 		• AnimatedSprite2D (Life3)
@@ -17,7 +16,7 @@ node setup
 in level
 • Node2D (Level 1)
 	• CanvasLayer (UI)
-		• Metrics (instance)
+		• MetricsManager (instance)
 """
 
 extends Node

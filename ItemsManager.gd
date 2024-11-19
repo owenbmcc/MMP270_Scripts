@@ -7,12 +7,12 @@ save_objects_states save the current items states,
 
 node setup
 • Node2D (Level 1)
-	• Node (ItemManager)
+	• Node #ItemsManager.gd (ItemsManager)
 	
 signals
-Checkpoint on_activated -> _on_checkpoint_activated
-Collectible on_collected -> _on_collectible_collected
-Player died -> _on_player_died
+Collectible on_collected -> ItemsManager _on_collectible_collected
+Player died -> SceneManager _on_player_died
+Checkpoint on_activated -> CheckpointsManager _on_checkpoint_activated
 """
 
 extends Node

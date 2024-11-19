@@ -1,10 +1,10 @@
 """
-use this to make the camera follow the player 
-only if camera cannot be child of player
-nodes
+only use this if camerea cannot be parented to the player
+this makes the camera follow the player 
+node setup
 • Level 1
 	• Player
-	• Camera2D (CameraController)
+	• Camera2D #CameraController.gd
 """
 
 extends Camera2D

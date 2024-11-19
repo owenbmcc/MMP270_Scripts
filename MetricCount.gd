@@ -3,8 +3,8 @@ metric that counts up from 0
 can be its own scene/component or inside Metrics scene
 
 node setup
-• Control (Metrics)
-	• Control (Item to count) <- Script here
+• Control (MetricsManager)
+	• Control #MetricCount.gd (ItemName)
 		• AnimatedSprite2D (or TextureRect/Sprite) icon image for metric
 		• Label (to display count)
 """

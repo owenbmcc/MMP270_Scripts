@@ -11,10 +11,10 @@ node setup syntax
 tab implies hierarchy, parent/child relationships
 
 node example  
-- • Area2D  
-	- • AnimatedSprite2D  
-	- • CollisionShape2D  
-	- • AudioStreamPlayer2D  
+- Area2D  
+	- AnimatedSprite2D  
+	- CollisionShape2D  
+	- AudioStreamPlayer2D  
 
 \# is attach script  
 • Area2D #Collectible.gd
@@ -29,11 +29,11 @@ node example
 • Timer (Oneshot=true)  
 
 ~ = optional  
-- • Area2D  
-	- ~ AudioStreamPlayer2D  
+- Area2D  
+	- ~ AudioStreamPlayer2D
+ 
 *or*  
 • Area2D (Layer: Enemy, ~Mask: Player)  
-
 
 sound effects in scripts are commented out to avoid errors, to introduce sfx, find and uncomment
 
